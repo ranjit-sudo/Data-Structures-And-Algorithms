@@ -1,0 +1,34 @@
+class Solution
+{
+	public static int kthSmallest(int[][]A,int n,int k)
+	{
+        int min=A[0][0];
+        int max=A[A.length-1][A[0].length-1];
+        
+        while(min<=max){
+            int mid=min+(max-min)/2;
+            int get=0,placed=0;
+            
+            for(int i=0;i<n;i++){
+                get=Arrays.binarySearch(A[i],mid);
+                if(get<0){
+                    get=Math.abs(get)-1;
+                }
+                else{
+                    while(get<A[0].length && A[i][get]==mid){
+                        get++;
+                    }
+                }
+                placed+=get;
+            }
+            
+            if(placed<k){
+                min=mid+1;
+            }
+            else{
+                max=mid-1;
+            }
+        }
+        return min;
+    }
+}
