@@ -1,0 +1,49 @@
+class Solution
+{
+    static long count;
+    static long inversionCount(long arr[], long N)
+    {
+        count=0;
+        mergeSort(arr,0,(int)N-1);
+         return count;
+    }
+    static long[] mergeSort(long arr[],int low,int high){
+        if(low==high){
+            long a[]=new long[1];
+            a[0]=arr[low];
+            return a;
+        }
+        
+        int mid=(high+low)/2;
+        
+        long left[]=mergeSort(arr,low,mid);
+        long right[]=mergeSort(arr,mid+1,high);
+        
+        return merge2Arrays(left,right);
+    }
+    static long[] merge2Arrays(long arr[],long brr[]){
+        int i=0,j=0,k=0;
+        long res[]=new long[arr.length+brr.length];
+        
+        while(i<arr.length && j<brr.length){
+            if(arr[i]<=brr[j]){
+                res[k]=arr[i];
+                i++;    k++;
+            }
+            else{
+                count+=(arr.length-i);
+                res[k]=brr[j];
+                j++;    k++;
+            }
+        }
+        while(i<arr.length){
+            res[k]=arr[i];
+            i++;k++;
+        }
+        while(j<brr.length){
+            res[k]=brr[j];
+            j++;k++;
+        }
+        return res;
+    }
+}
